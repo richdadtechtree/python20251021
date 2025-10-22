@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HTML5 · CSS3 · JavaScript 연습장</title>
+  <style>
+    /* 기본 스타일 */
+    :root{
+      --bg:#f7f9fc;
+      --card:#ffffff;
+      --accent:#2b8cff;
+      --text:#0b2135;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans",Helvetica,Arial;
+      background:var(--bg); color:var(--text); line-height:1.5;
+    }
+    header{
+      background:linear-gradient(90deg,var(--accent),#6dd3ff);
+      color:#fff; padding:18px 20px;
+    }
+    .wrap{max-width:1100px;margin:18px auto;padding:0 16px}
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:18px}
+    .card{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 6px 18px rgba(11,33,53,0.06)}
+    h1{margin:0 0 6px;font-size:20px}
+    h2{font-size:16px;margin:8px 0}
+    p.small{font-size:13px;color:#45697f;margin:6px 0 12px}
+    /* 예제 레이아웃/버튼 */
+    .example{padding:10px;border-radius:8px;background:linear-gradient(180deg,#fbfdff,#f2f8ff);border:1px solid rgba(43,140,255,0.06)}
+    button{background:var(--accent);color:#fff;border:0;padding:8px 10px;border-radius:6px;cursor:pointer}
+    button.secondary{background:#edf2ff;color:var(--accent);border:1px solid rgba(43,140,255,0.12)}
+    pre{background:#0f1724;color:#cde7ff;padding:10px;border-radius:6px;overflow:auto;font-family:Consolas,monospace;font-size:13px}
+    /* 간단 반응형 */
+    @media (max-width:880px){.grid{grid-template-columns:1fr;}}
+    /* flex / grid 예시 박스 */
+    .layout-demo{display:flex;gap:8px;padding:10px;border-radius:6px;background:#fff;border:1px dashed rgba(0,0,0,0.04)}
+    .box{background:linear-gradient(180deg,#fff,#eef6ff);padding:12px;border-radius:6px;flex:1;text-align:center}
+    /* 활동 영역 */
+    .runner{display:flex;gap:8px;align-items:flex-start}
+    textarea{width:100%;min-height:140px;font-family:Consolas,monospace;padding:8px;border-radius:6px;border:1px solid #d7e7ff}
+    iframe{width:100%;height:240px;border:1px solid #e2eefc;border-radius:6px;background:#fff}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>HTML5 · CSS3 · JavaScript 연습장</h1>
+      <p class="small">간단한 예제와 실습 영역이 포함된 한 파일 학습 페이지입니다. 아래 항목을 보고 직접 수정해보세요.</p>
+    </div>
+  </header>
+
+  <main class="wrap" style="margin-bottom:40px">
+    <div class="grid">
+      <section class="card">
+        <h2>1. HTML5 기초 (시맨틱 태그)</h2>
+        <p class="small">header, nav, main, article, section, aside, footer 같은 시맨틱 태그 사용 예시</p>
+        <div class="example">
+          <!-- 시맨틱 HTML 예시 -->
+          <header style="padding:8px;border-radius:6px;background:#fff">사이트 헤더</header>
+          <nav style="margin-top:8px;font-size:14px">• <a href="#">홈</a> • <a href="#">문서</a> • <a href="#">연습</a></nav>
+          <article style="margin-top:10px">
+            <h3 style="margin:6px 0">Article 제목</h3>
+            <p style="margin:0;color:#334e63">시맨틱 태그는 구조를 명확하게 하고 접근성을 높입니다.</p>
+          </article>
+          <footer style="margin-top:10px;font-size:13px;color:#6b8595">예시 풋터 · 저작권 표기</footer>
+        </div>
+
+        <h2 style="margin-top:12px">2. CSS3 기초</h2>
+        <p class="small">Flexbox, Grid, CSS 변수, transition 예시</p>
+        <div class="example" id="layoutArea">
+          <div class="layout-demo" id="layoutDemo">
+            <div class="box">박스 1</div>
+            <div class="box">박스 2</div>
+            <div class="box">박스 3</div>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button id="toggleLayout">Flex ↔ Grid</button>
+            <button class="secondary" id="toggleTheme">테마 토글</button>
+          </div>
+        </div>
+
+        <h2 style="margin-top:12px">3. JavaScript 기초</h2>
+        <p class="small">DOM 선택, 이벤트, fetch 예시</p>
+        <div class="example">
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <input id="nameInput" placeholder="이름 입력" style="flex:1;padding:8px;border-radius:6px;border:1px solid #d7e7ff" />
+            <button id="greetBtn">인사</button>
+          </div>
+          <div id="greetResult" style="min-height:28px"></div>
+
+          <hr style="margin:10px 0;border:none;border-top:1px dashed #e6f0ff" />
+
+          <div style="display:flex;gap:8px;align-items:center">
+            <button id="fetchBtn">간단한 fetch 호출</button>
+            <small id="fetchResult" style="color:#234">결과 대기중...</small>
+          </div>
+
+        </div>
+
+        <h2 style="margin-top:12px">4. 실습: HTML 즉시 실행기</h2>
+        <p class="small">왼쪽에 HTML을 쓰고 '실행'을 누르면 아래 미리보기에 반영됩니다. (iframe srcdoc 사용)</p>
+        <div class="example runner">
+          <div style="flex:1">
+            <textarea id="htmlInput"><!doctype html>
+<html>
+  <body>
+    <h2>미리보기 안의 HTML</h2>
+    <p>여기에 HTML을 입력해보세요.</p>
+  </body>
+</html></textarea>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <button id="runBtn">실행</button>
+              <button id="resetBtn" class="secondary">초기화</button>
+            </div>
+          </div>
+          <div style="width:48%">
+            <iframe id="preview" sandbox="allow-scripts"></iframe>
+          </div>
+        </div>
+
+      </section>
+
+      <aside class="card">
+        <h2>학습 팁 & 연습 문제</h2>
+        <ul style="padding-left:18px;margin:8px 0;color:#334e63">
+          <li>시맨틱 태그로 간단한 블로그 구조 만들어보기</li>
+          <li>Flex로 네비바를 만들고, Grid로 갤러리 레이아웃 바꿔보기</li>
+          <li>버튼 클릭으로 DOM 요소를 만들고 제거해보기</li>
+          <li>fetch로 공개 API 호출 결과를 화면에 렌더링해보기</li>
+        </ul>
+
+        <h2 style="margin-top:12px">참고 코드 (짧게)</h2>
+        <pre>&lt;button onclick="alert('클릭!')"&gt;클릭&lt;/button&gt;</pre>
+
+        <h2 style="margin-top:12px">단계별 실습</h2>
+        <ol style="padding-left:18px;margin:8px 0;color:#334e63">
+          <li>HTML 골격 만들기(header, main, footer)</li>
+          <li>CSS 변수로 색상 관리</li>
+          <li>JS로 버튼 이벤트 등록</li>
+        </ol>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    // 레이아웃 토글 (flex <-> grid)
+    const layoutDemo = document.getElementById('layoutDemo');
+    const toggleLayout = document.getElementById('toggleLayout');
+    toggleLayout.addEventListener('click', () => {
+      if (layoutDemo.style.display === 'grid') {
+        layoutDemo.style.display = 'flex';
+        layoutDemo.style.gridTemplateColumns = '';
+        toggleLayout.textContent = 'Flex ↔ Grid';
+      } else {
+        layoutDemo.style.display = 'grid';
+        layoutDemo.style.gridTemplateColumns = 'repeat(3,1fr)';
+        toggleLayout.textContent = 'Grid ↔ Flex';
+      }
+    });
+
+    // 테마 토글 (CSS 변수 변경)
+    const toggleTheme = document.getElementById('toggleTheme');
+    let dark = false;
+    toggleTheme.addEventListener('click', () => {
+      if (!dark) {
+        document.documentElement.style.setProperty('--bg','#0b1220');
+        document.documentElement.style.setProperty('--card','#0f1724');
+        document.documentElement.style.setProperty('--accent','#6dd3ff');
+        document.documentElement.style.setProperty('--text','#e6f7ff');
+        dark = true;
+      } else {
+        document.documentElement.style.removeProperty('--bg');
+        document.documentElement.style.removeProperty('--card');
+        document.documentElement.style.removeProperty('--accent');
+        document.documentElement.style.removeProperty('--text');
+        dark = false;
+      }
+    });
+
+    // 간단한 인사 메시지 (DOM, 이벤트)
+    const nameInput = document.getElementById('nameInput');
+    const greetBtn = document.getElementById('greetBtn');
+    const greetResult = document.getElementById('greetResult');
+    greetBtn.addEventListener('click', () => {
+      const name = nameInput.value.trim() || '친구';
+      // XSS 주의: 텍스트로만 삽입
+      greetResult.textContent = `안녕하세요, ${name}님!`;
+    });
+
+    // fetch 예시 (공개 API 사용 — 네트워크 환경에 따라 실패할 수 있음)
+    const fetchBtn = document.getElementById('fetchBtn');
+    const fetchResult = document.getElementById('fetchResult');
+    fetchBtn.addEventListener('click', async () => {
+      fetchResult.textContent = '요청 중...';
+      try {
+        const res = await fetch('https://api.github.com/zen');
+        if (!res.ok) throw new Error(res.statusText);
+        const text = await res.text();
+        fetchResult.textContent = text;
+      } catch (e) {
+        fetchResult.textContent = '요청 실패: ' + e.message;
+      }
+    });
+
+    // HTML 실행기: textarea -> iframe.srcdoc
+    const runBtn = document.getElementById('runBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const htmlInput = document.getElementById('htmlInput');
+    const preview = document.getElementById('preview');
+
+    function runPreview(){
+      // 안전을 위해 iframe은 sandbox 속성 사용 (allow-scripts만 허용)
+      preview.srcdoc = htmlInput.value;
+    }
+    runBtn.addEventListener('click', runPreview);
+    resetBtn.addEventListener('click', () => {
+      htmlInput.value = '<!doctype html>\\n<html>\\n  <body>\\n    <h2>미리보기 안의 HTML</h2>\\n    <p>여기에 HTML을 입력해보세요.</p>\\n  </body>\\n</html>';
+      runPreview();
+    });
+
+    // 초기 미리보기 로드
+    runPreview();
+  </script>
+</body>
+</html>
+```<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HTML5 · CSS3 · JavaScript 연습장</title>
+  <style>
+    /* 기본 스타일 */
+    :root{
+      --bg:#f7f9fc;
+      --card:#ffffff;
+      --accent:#2b8cff;
+      --text:#0b2135;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans",Helvetica,Arial;
+      background:var(--bg); color:var(--text); line-height:1.5;
+    }
+    header{
+      background:linear-gradient(90deg,var(--accent),#6dd3ff);
+      color:#fff; padding:18px 20px;
+    }
+    .wrap{max-width:1100px;margin:18px auto;padding:0 16px}
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:18px}
+    .card{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 6px 18px rgba(11,33,53,0.06)}
+    h1{margin:0 0 6px;font-size:20px}
+    h2{font-size:16px;margin:8px 0}
+    p.small{font-size:13px;color:#45697f;margin:6px 0 12px}
+    /* 예제 레이아웃/버튼 */
+    .example{padding:10px;border-radius:8px;background:linear-gradient(180deg,#fbfdff,#f2f8ff);border:1px solid rgba(43,140,255,0.06)}
+    button{background:var(--accent);color:#fff;border:0;padding:8px 10px;border-radius:6px;cursor:pointer}
+    button.secondary{background:#edf2ff;color:var(--accent);border:1px solid rgba(43,140,255,0.12)}
+    pre{background:#0f1724;color:#cde7ff;padding:10px;border-radius:6px;overflow:auto;font-family:Consolas,monospace;font-size:13px}
+    /* 간단 반응형 */
+    @media (max-width:880px){.grid{grid-template-columns:1fr;}}
+    /* flex / grid 예시 박스 */
+    .layout-demo{display:flex;gap:8px;padding:10px;border-radius:6px;background:#fff;border:1px dashed rgba(0,0,0,0.04)}
+    .box{background:linear-gradient(180deg,#fff,#eef6ff);padding:12px;border-radius:6px;flex:1;text-align:center}
+    /* 활동 영역 */
+    .runner{display:flex;gap:8px;align-items:flex-start}
+    textarea{width:100%;min-height:140px;font-family:Consolas,monospace;padding:8px;border-radius:6px;border:1px solid #d7e7ff}
+    iframe{width:100%;height:240px;border:1px solid #e2eefc;border-radius:6px;background:#fff}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>HTML5 · CSS3 · JavaScript 연습장</h1>
+      <p class="small">간단한 예제와 실습 영역이 포함된 한 파일 학습 페이지입니다. 아래 항목을 보고 직접 수정해보세요.</p>
+    </div>
+  </header>
+
+  <main class="wrap" style="margin-bottom:40px">
+    <div class="grid">
+      <section class="card">
+        <h2>1. HTML5 기초 (시맨틱 태그)</h2>
+        <p class="small">header, nav, main, article, section, aside, footer 같은 시맨틱 태그 사용 예시</p>
+        <div class="example">
+          <!-- 시맨틱 HTML 예시 -->
+          <header style="padding:8px;border-radius:6px;background:#fff">사이트 헤더</header>
+          <nav style="margin-top:8px;font-size:14px">• <a href="#">홈</a> • <a href="#">문서</a> • <a href="#">연습</a></nav>
+          <article style="margin-top:10px">
+            <h3 style="margin:6px 0">Article 제목</h3>
+            <p style="margin:0;color:#334e63">시맨틱 태그는 구조를 명확하게 하고 접근성을 높입니다.</p>
+          </article>
+          <footer style="margin-top:10px;font-size:13px;color:#6b8595">예시 풋터 · 저작권 표기</footer>
+        </div>
+
+        <h2 style="margin-top:12px">2. CSS3 기초</h2>
+        <p class="small">Flexbox, Grid, CSS 변수, transition 예시</p>
+        <div class="example" id="layoutArea">
+          <div class="layout-demo" id="layoutDemo">
+            <div class="box">박스 1</div>
+            <div class="box">박스 2</div>
+            <div class="box">박스 3</div>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button id="toggleLayout">Flex ↔ Grid</button>
+            <button class="secondary" id="toggleTheme">테마 토글</button>
+          </div>
+        </div>
+
+        <h2 style="margin-top:12px">3. JavaScript 기초</h2>
+        <p class="small">DOM 선택, 이벤트, fetch 예시</p>
+        <div class="example">
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <input id="nameInput" placeholder="이름 입력" style="flex:1;padding:8px;border-radius:6px;border:1px solid #d7e7ff" />
+            <button id="greetBtn">인사</button>
+          </div>
+          <div id="greetResult" style="min-height:28px"></div>
+
+          <hr style="margin:10px 0;border:none;border-top:1px dashed #e6f0ff" />
+
+          <div style="display:flex;gap:8px;align-items:center">
+            <button id="fetchBtn">간단한 fetch 호출</button>
+            <small id="fetchResult" style="color:#234">결과 대기중...</small>
+          </div>
+
+        </div>
+
+        <h2 style="margin-top:12px">4. 실습: HTML 즉시 실행기</h2>
+        <p class="small">왼쪽에 HTML을 쓰고 '실행'을 누르면 아래 미리보기에 반영됩니다. (iframe srcdoc 사용)</p>
+        <div class="example runner">
+          <div style="flex:1">
+            <textarea id="htmlInput"><!doctype html>
+<html>
+  <body>
+    <h2>미리보기 안의 HTML</h2>
+    <p>여기에 HTML을 입력해보세요.</p>
+  </body>
+</html></textarea>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <button id="runBtn">실행</button>
+              <button id="resetBtn" class="secondary">초기화</button>
+            </div>
+          </div>
+          <div style="width:48%">
+            <iframe id="preview" sandbox="allow-scripts"></iframe>
+          </div>
+        </div>
+
+      </section>
+
+      <aside class="card">
+        <h2>학습 팁 & 연습 문제</h2>
+        <ul style="padding-left:18px;margin:8px 0;color:#334e63">
+          <li>시맨틱 태그로 간단한 블로그 구조 만들어보기</li>
+          <li>Flex로 네비바를 만들고, Grid로 갤러리 레이아웃 바꿔보기</li>
+          <li>버튼 클릭으로 DOM 요소를 만들고 제거해보기</li>
+          <li>fetch로 공개 API 호출 결과를 화면에 렌더링해보기</li>
+        </ul>
+
+        <h2 style="margin-top:12px">참고 코드 (짧게)</h2>
+        <pre>&lt;button onclick="alert('클릭!')"&gt;클릭&lt;/button&gt;</pre>
+
+        <h2 style="margin-top:12px">단계별 실습</h2>
+        <ol style="padding-left:18px;margin:8px 0;color:#334e63">
+          <li>HTML 골격 만들기(header, main, footer)</li>
+          <li>CSS 변수로 색상 관리</li>
+          <li>JS로 버튼 이벤트 등록</li>
+        </ol>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    // 레이아웃 토글 (flex <-> grid)
+    const layoutDemo = document.getElementById('layoutDemo');
+    const toggleLayout = document.getElementById('toggleLayout');
+    toggleLayout.addEventListener('click', () => {
+      if (layoutDemo.style.display === 'grid') {
+        layoutDemo.style.display = 'flex';
+        layoutDemo.style.gridTemplateColumns = '';
+        toggleLayout.textContent = 'Flex ↔ Grid';
+      } else {
+        layoutDemo.style.display = 'grid';
+        layoutDemo.style.gridTemplateColumns = 'repeat(3,1fr)';
+        toggleLayout.textContent = 'Grid ↔ Flex';
+      }
+    });
+
+    // 테마 토글 (CSS 변수 변경)
+    const toggleTheme = document.getElementById('toggleTheme');
+    let dark = false;
+    toggleTheme.addEventListener('click', () => {
+      if (!dark) {
+        document.documentElement.style.setProperty('--bg','#0b1220');
+        document.documentElement.style.setProperty('--card','#0f1724');
+        document.documentElement.style.setProperty('--accent','#6dd3ff');
+        document.documentElement.style.setProperty('--text','#e6f7ff');
+        dark = true;
+      } else {
+        document.documentElement.style.removeProperty('--bg');
+        document.documentElement.style.removeProperty('--card');
+        document.documentElement.style.removeProperty('--accent');
+        document.documentElement.style.removeProperty('--text');
+        dark = false;
+      }
+    });
+
+    // 간단한 인사 메시지 (DOM, 이벤트)
+    const nameInput = document.getElementById('nameInput');
+    const greetBtn = document.getElementById('greetBtn');
+    const greetResult = document.getElementById('greetResult');
+    greetBtn.addEventListener('click', () => {
+      const name = nameInput.value.trim() || '친구';
+      // XSS 주의: 텍스트로만 삽입
+      greetResult.textContent = `안녕하세요, ${name}님!`;
+    });
+
+    // fetch 예시 (공개 API 사용 — 네트워크 환경에 따라 실패할 수 있음)
+    const fetchBtn = document.getElementById('fetchBtn');
+    const fetchResult = document.getElementById('fetchResult');
+    fetchBtn.addEventListener('click', async () => {
+      fetchResult.textContent = '요청 중...';
+      try {
+        const res = await fetch('https://api.github.com/zen');
+        if (!res.ok) throw new Error(res.statusText);
+        const text = await res.text();
+        fetchResult.textContent = text;
+      } catch (e) {
+        fetchResult.textContent = '요청 실패: ' + e.message;
+      }
+    });
+
+    // HTML 실행기: textarea -> iframe.srcdoc
+    const runBtn = document.getElementById('runBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const htmlInput = document.getElementById('htmlInput');
+    const preview = document.getElementById('preview');
+
+    function runPreview(){
+      // 안전을 위해 iframe은 sandbox 속성 사용 (allow-scripts만 허용)
+      preview.srcdoc = htmlInput.value;
+    }
+    runBtn.addEventListener('click', runPreview);
+    resetBtn.addEventListener('click', () => {
+      htmlInput.value = '<!doctype html>\\n<html>\\n  <body>\\n    <h2>미리보기 안의 HTML</h2>\\n    <p>여기에 HTML을 입력해보세요.</p>\\n  </body>\\n</html>';
+      runPreview();
+    });
+
+    // 초기 미리보기 로드
+    runPreview();
+  </script>
+</body>
+</html>
