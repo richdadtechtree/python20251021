@@ -1,6 +1,5 @@
 # web2.py
 #웹사이트 요청
-
 import urllib.request
 
 #크롤링
